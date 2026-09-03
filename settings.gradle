@@ -1,0 +1,2 @@
+rootProject.name = "VixStreamAndroid"
+include ':app'
