@@ -356,6 +356,12 @@ fun ProfileScreen(viewModel: MovieViewModel) {
             )
 
             SettingsItem(
+                icon = Icons.Default.SystemUpdate,
+                label = "Controlla aggiornamenti",
+                onClick = { viewModel.checkForUpdate() }
+            )
+
+            SettingsItem(
                 icon = Icons.Default.History,
                 label = "Cancella cronologia",
                 onClick = { showClearHistoryDialog = true }
@@ -403,12 +409,6 @@ fun ProfileScreen(viewModel: MovieViewModel) {
                 icon = Icons.Default.Info,
                 label = "Info app",
                 onClick = { showInfoDialog = true }
-            )
-
-            SettingsItem(
-                icon = Icons.Default.SystemUpdate,
-                label = "Controlla aggiornamenti",
-                onClick = { viewModel.checkForUpdate() }
             )
         }
     }
