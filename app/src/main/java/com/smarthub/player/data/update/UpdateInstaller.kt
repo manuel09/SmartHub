@@ -26,9 +26,11 @@ object UpdateInstaller {
     }
 
     suspend fun downloadAndInstall(context: Context, info: UpdateInfo): Result<Unit> = withContext(Dispatchers.IO) {
+        val apkUrl = selectApkUrl(info)
+        if (apkUrl == null) return@withContext Result.failure(Exception("Nessun APK compatibile con questo dispositivo"))
         val apkFile = File(context.cacheDir, "update_${info.versionCode}.apk")
         return@withContext try {
-            val request = Request.Builder().url(info.apkUrl).get().build()
+            val request = Request.Builder().url(apkUrl).get().build()
             client.newCall(request).execute().use { resp ->
                 if (!resp.isSuccessful) {
                     return@withContext Result.failure(Exception("HTTP ${resp.code}"))
@@ -76,6 +78,18 @@ object UpdateInstaller {
             Log.e(TAG, "Download/install error: ${e.message}")
             apkFile.delete()
             Result.failure(e)
+        }
+    }
+
+    private fun selectApkUrl(info: UpdateInfo): String? {
+        val abi = android.os.Build.SUPPORTED_ABIS.firstOrNull() ?: ""
+        val isV7a = abi.contains("armeabi-v7a", ignoreCase = true) ||
+                (abi.contains("arm", ignoreCase = true) && !abi.contains("arm64", ignoreCase = true))
+        return when {
+            isV7a && info.apkUrlV7a.isNotBlank() -> info.apkUrlV7a
+            info.apkUrl.isNotBlank() -> info.apkUrl
+            info.apkUrlV7a.isNotBlank() -> info.apkUrlV7a
+            else -> null
         }
     }
 }

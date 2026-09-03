@@ -48,14 +48,27 @@ object UpdateChecker {
                 }
                 val body = resp.body?.string() ?: return@withContext null
                 val info = gson.fromJson(body, UpdateInfo::class.java)
-                if (info.apkUrl.isBlank()) return@withContext null
+                val url = selectApkUrl(info)
+                if (url == null) return@withContext null
                 if (info.versionCode <= currentVersionCode) return@withContext null
-                Log.d(TAG, "Update available: ${info.versionName} (${info.versionCode})")
+                Log.d(TAG, "Update available: ${info.versionName} (${info.versionCode}) -> $url")
                 info
             }
         } catch (e: Exception) {
             Log.e(TAG, "Update check error: ${e.message}")
             null
+        }
+    }
+
+    private fun selectApkUrl(info: UpdateInfo): String? {
+        val abi = android.os.Build.SUPPORTED_ABIS.firstOrNull() ?: ""
+        val isV7a = abi.contains("armeabi-v7a", ignoreCase = true) ||
+                (abi.contains("arm", ignoreCase = true) && !abi.contains("arm64", ignoreCase = true))
+        return when {
+            isV7a && info.apkUrlV7a.isNotBlank() -> info.apkUrlV7a
+            info.apkUrl.isNotBlank() -> info.apkUrl
+            info.apkUrlV7a.isNotBlank() -> info.apkUrlV7a
+            else -> null
         }
     }
 }
