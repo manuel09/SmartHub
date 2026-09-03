@@ -45,7 +45,7 @@ import android.util.Log
 import androidx.compose.animation.Crossfade
 
 enum class Screen {
-    Home, Search, TV, Movies, Series, Profile, Detail, PLAYER
+    Home, Search, TV, Movies, Series, Discover, Profile, Detail, PLAYER
 }
 
 
@@ -316,6 +316,7 @@ fun VixApp(viewModel: MovieViewModel = viewModel()) {
             Screen.Search -> 1
             Screen.Movies -> 2
             Screen.Series -> 3
+            Screen.Discover -> 5
             Screen.Profile -> 4
             else -> 0
         }
@@ -326,6 +327,7 @@ fun VixApp(viewModel: MovieViewModel = viewModel()) {
                 2 -> Screen.Movies
                 3 -> Screen.Series
                 4 -> Screen.Profile
+                5 -> Screen.Discover
                 else -> Screen.Home
             }
             viewModel.clearStream()
@@ -754,6 +756,12 @@ fun AppContent(
                 viewModel = viewModel,
                 onMovieClick = onMovieSelect,
                 isLoading = isLoadingHome
+            )
+        }
+        Screen.Discover -> {
+            DiscoverScreen(
+                viewModel = viewModel,
+                onMovieClick = onMovieSelect
             )
         }
         Screen.Detail -> {

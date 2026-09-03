@@ -1,8 +1,8 @@
 {
-  "versionCode": 2,
-  "versionName": "1.1",
-  "apkUrl": "https://github.com/manuel09/SmartHub/releases/download/1.1/app-arm64-v8a-release.apk",
-  "apkUrlV7a": "https://github.com/manuel09/SmartHub/releases/download/1.1/app-armeabi-v7a-release.apk",
-  "changelog": "- Aggiornamento automatico in-app\n- Fix navigazione indietro\n- Locandine più piccole su TV\n- Player con proporzioni corrette",
+  "versionCode": 3,
+  "versionName": "1.2",
+  "apkUrl": "https://github.com/manuel09/SmartHub/releases/download/1.2/app-arm64-v8a-release.apk",
+  "apkUrlV7a": "https://github.com/manuel09/SmartHub/releases/download/1.2/app-armeabi-v7a-release.apk",
+  "changelog": "- Nuova sezione Scopri con categorie (Animazione, Horror, ecc.)\n- Toggle Film / Serie TV\n- Selezione APK automatica in base al dispositivo",
   "mandatory": false
 }
