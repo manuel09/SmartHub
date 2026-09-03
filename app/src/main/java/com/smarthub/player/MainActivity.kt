@@ -217,6 +217,7 @@ fun VixApp(viewModel: MovieViewModel = viewModel()) {
         // Update dialog (shown over any screen)
         val updateInfo by viewModel.updateInfo.collectAsState()
         val isDownloadingUpdate by viewModel.isDownloadingUpdate.collectAsState()
+        val updateError by viewModel.updateError.collectAsState()
         updateInfo?.let { info ->
             AlertDialog(
                 onDismissRequest = { viewModel.dismissUpdate() },
@@ -250,6 +251,15 @@ fun VixApp(viewModel: MovieViewModel = viewModel()) {
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Text("Scaricamento in corso...", color = Color.Gray, fontSize = 12.sp)
                             }
+                        }
+                        if (updateError != null) {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                updateError!!,
+                                color = Color(0xFFFF5252),
+                                fontSize = 13.sp,
+                                lineHeight = 18.sp
+                            )
                         }
                     }
                 },

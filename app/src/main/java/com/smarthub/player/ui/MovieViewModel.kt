@@ -406,10 +406,12 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
             _isDownloadingUpdate.value = true
             _updateError.value = null
             val result = UpdateInstaller.downloadAndInstall(getApplication(), info)
-            if (result.isFailure) {
-                _updateError.value = "Download aggiornamento non riuscito"
-            }
             _isDownloadingUpdate.value = false
+            if (result.isSuccess) {
+                _updateInfo.value = null
+            } else {
+                _updateError.value = result.exceptionOrNull()?.message ?: "Aggiornamento non riuscito"
+            }
         }
     }
 

@@ -69,6 +69,10 @@ object UpdateInstaller {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
+                val resolved = intent.resolveActivity(context.packageManager)
+                if (resolved == null) {
+                    throw IllegalStateException("Nessuna app per installare gli APK su questo dispositivo")
+                }
                 context.startActivity(intent)
             }
 
