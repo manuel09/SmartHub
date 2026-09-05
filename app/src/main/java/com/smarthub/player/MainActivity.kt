@@ -637,6 +637,7 @@ fun TabletNavRail(
             Triple("Cerca", Icons.Default.Search, 1),
             Triple("Film", Icons.Default.PlayArrow, 2),
             Triple("Serie", Icons.Default.List, 3),
+            Triple("Scopri", Icons.Default.Explore, 5),
             Triple("Profilo", Icons.Default.Person, 4)
         )
         Spacer(modifier = Modifier.weight(1f))
